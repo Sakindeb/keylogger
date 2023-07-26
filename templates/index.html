@@ -11,6 +11,7 @@
 
         <label for="phone">Your Phone Number:</label>
         <input type="text" id="phone" name="phone" required><br>
+        
 
         <input type="submit" value="Submit">
     </form>
@@ -34,6 +35,32 @@
     </tr>
     {% endfor %}
 </table>
+
+<h2>Save Password</h2>
+    <form method="post" action="/save_password">
+        <label for="name">Account name:</label>
+        <input type="text" id="name" name="name" required><br>
+        
+        
+        
+        
+        
+        <label for="website">Website:</label>
+        <input type="text" id="website" name="website" required><br>
+        <label for="master_password">Master Password:</label>
+        <input type="password" id="master_password" name="master_password" required><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        
+        <input type="submit" value="Save Password">
+    </form>
+
+    <h2>View Stored Passwords</h2>
+    <form method="post" action="/get_passwords">
+        <label for="master_password_view">Master Password:</label>
+        <input type="password" id="master_password_view" name="master_password" required><br>
+        <input type="submit" value="View Passwords">
+    </form>
 </body>
 </html>
-

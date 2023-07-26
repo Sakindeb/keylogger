@@ -1,3 +1,4 @@
+import os.path
 import subprocess
 import requests
 from flask import Flask, render_template, request, jsonify
@@ -10,22 +11,23 @@ app = Flask(__name__)
 # Replace with your Africa's Talking API credentials
 AFRICASTALKING_USERNAME = 'spaceity'
 AFRICASTALKING_API_KEY = 'b07e0b95e54d9747c23eb69011ee85c7c842ac57254e5bc4590bfe683fecff32'
+
+# Initialize Africa's Talking SMS
 def initialize_sms():
     try:
-        # Replace 'YOUR_USERNAME' and 'YOUR_API_KEY' with your actual Africa's Talking credentials
-        africastalking.initialize(username='spaceity', api_key='b07e0b95e54d9747c23eb69011ee85c7c842ac57254e5bc4590bfe683fecff32')
+        africastalking.initialize(username=AFRICASTALKING_USERNAME, api_key=AFRICASTALKING_API_KEY)
         return True
     except Exception as e:
         print(f"Error initializing Africa's Talking: {e}")
         return False
 
-# Initialize Africa's Talking SMS
 if initialize_sms():
     sms = africastalking.SMS
 else:
     sms = None
 
-IPINFO_API_KEY = '4a156323e54c50'  # Replace with your API key from https://ipinfo.io/
+# Replace with your API key from https://ipinfo.io/
+IPINFO_API_KEY = '4a156323e54c50'
 
 def run_command(command):
     result = subprocess.run(command, stdout=subprocess.PIPE, text=True, shell=True)
@@ -53,12 +55,53 @@ def get_ipinfo_details(ip_address):
     response = requests.get(url)
     return response.json()
 
+# Password Saving Functions
+PASSWORD_FILE = "info.txt"
+MASTER_PASSWORD = "your_master_password"  # Replace with your desired master password
+
+
+def encrypt_password(password):
+    # In a real-world application, use proper encryption techniques.
+    return password
+
+
+def decrypt_password(encrypted_password):
+    # In a real-world application, use proper decryption techniques.
+    return encrypted_password
+
+
+def check_master_password(password):
+    return password == MASTER_PASSWORD
+
+
+def check_existence():
+    if os.path.exists(PASSWORD_FILE):
+        pass
+    else:
+        file = open(PASSWORD_FILE, 'w')
+        file.close()
+
+
+def append_new(user_name, password, website):
+    with open(PASSWORD_FILE, 'a') as file:
+        file.write("---------------------------------\n")
+        file.write("UserName:" + user_name + "\n")
+        file.write("Password:" + encrypt_password(password) + "\n")
+        file.write("Website:" + website + "\n")
+        file.write("--------------------\n")
+
+
+def read_passwords():
+    with open(PASSWORD_FILE, 'r') as file:
+        content = file.read()
+    return content
 def send_sms(phone_number, message):
     try:
         response = sms.send(message, [phone_number])
         print(response)
     except Exception as e:
         print(f"Error sending SMS: {e}")
+
 
 @app.route('/api/network_stats')
 def get_network_statistics():
@@ -80,9 +123,19 @@ def get_network_statistics():
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Get user's name and phone number from the form
+        # Get user's name, phone number, and password from the form
         user_name = request.form['name']
         user_phone = request.form['phone']
+        master_password = request.form['master_password']
+
+        # Check the master password for validity
+        if not check_master_password(master_password):
+            return "Invalid master password. Password not saved."
+
+        # Save the password details
+        user_password = request.form['password']
+        website = request.form['website']
+        append_new(user_name, user_password, website)
 
         # Run netstat -ano command
         cmd_output = run_command('netstat -ano')
@@ -114,13 +167,39 @@ def index():
         send_sms(user_phone, message)
 
         return render_template('result.html')
+    
     # Get network statistics
     response = get_network_statistics()
     network_stats = json.loads(response.get_data(as_text=True))
 
     return render_template('index.html', network_stats=network_stats)
 
-   
+
+@app.route('/save_password', methods=['POST'])
+def save_password():
+    master_password = request.form['master_password']
+    if not check_master_password(master_password):
+        return "Invalid master password. Password not saved."
+
+    user_name = request.form['name']
+    password = request.form['password']
+    website = request.form['website']
+
+    append_new(user_name, password, website)
+
+    return "Password saved successfully!"
+
+
+@app.route('/get_passwords', methods=['POST'])
+def get_passwords():
+    master_password = request.form['master_password']
+    if not check_master_password(master_password):
+        return "Invalid master password. Passwords cannot be retrieved."
+
+    passwords = read_passwords()
+    return passwords
+
 
 if __name__ == "__main__":
+    check_existence()
     app.run(debug=True)
