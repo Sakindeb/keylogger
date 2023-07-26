@@ -1,8 +1,9 @@
 import subprocess
 import requests
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+import psutil
 import africastalking
-
+import json
 
 app = Flask(__name__)
 
@@ -23,8 +24,6 @@ if initialize_sms():
     sms = africastalking.SMS
 else:
     sms = None
-
-
 
 IPINFO_API_KEY = '4a156323e54c50'  # Replace with your API key from https://ipinfo.io/
 
@@ -55,17 +54,28 @@ def get_ipinfo_details(ip_address):
     return response.json()
 
 def send_sms(phone_number, message):
-    africastalking.initialize(AFRICASTALKING_USERNAME, AFRICASTALKING_API_KEY)
-    sms = africastalking.SMS
     try:
         response = sms.send(message, [phone_number])
         print(response)
     except Exception as e:
         print(f"Error sending SMS: {e}")
-def get_ipinfo_details(ip_address):
-    url = f'https://ipinfo.io/{ip_address}?token={IPINFO_API_KEY}'
-    response = requests.get(url)
-    return response.json()
+
+@app.route('/api/network_stats')
+def get_network_statistics():
+    network_stats = psutil.net_io_counters(pernic=True)
+
+    # Convert network_stats to a dictionary format for JSON response
+    network_data = {}
+    for interface, stats in network_stats.items():
+        network_data[interface] = {
+            'bytes_sent': stats.bytes_sent,
+            'bytes_received': stats.bytes_recv,
+            'packets_sent': stats.packets_sent,
+            'packets_received': stats.packets_recv
+        }
+
+    return jsonify(network_data)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -101,15 +111,16 @@ def index():
         message = f"Hey {user_name}! You have {num_loggers} logger(s) in your computer. Login to Safely to check them out."
 
         # Send the personalized SMS to the user's phone number
-        try:
-            response = sms.send(message, [user_phone])
-            print(response)
-        except Exception as e:
-            print(f"Error sending SMS: {e}")
+        send_sms(user_phone, message)
 
         return render_template('result.html')
+    # Get network statistics
+    response = get_network_statistics()
+    network_stats = json.loads(response.get_data(as_text=True))
 
-    return render_template('index.html')
+    return render_template('index.html', network_stats=network_stats)
+
+   
 
 if __name__ == "__main__":
     app.run(debug=True)

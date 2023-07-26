@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: Crypto.Cipher
+Version: 1
+Home-page: https://github.com/codeuk/Crypto.Cipher
+Author: CodeUK
+Author-email: d@doop.fun
+License: MIT
+Project-URL: GitHub, https://github.com/codeuk/Crypto.Cipher
+Project-URL: Bug Tracker, https://github.com/codeuk/Crypto.Cipher/issues
+Keywords: Crypto.Cipher,Crypto.Cipher
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Natural Language :: English
+Classifier: Topic :: Software Development
+Requires-Dist: requests
+

@@ -1,0 +1,56 @@
+{
+    "help_funcs.c": {
+        "data": {
+            "type": "analysis",
+            "id": "NjNjYzc2YWRmNGEzYjA0OTQ0MTQ5OWJhZjBlNjZkNzc6MTY5MDM2NTQwOA==",
+            "links": {
+                "self": "https://www.virustotal.com/api/v3/analyses/NjNjYzc2YWRmNGEzYjA0OTQ0MTQ5OWJhZjBlNjZkNzc6MTY5MDM2NTQwOA=="
+            }
+        }
+    },
+    "help_funcs_2.c": {
+        "data": {
+            "type": "analysis",
+            "id": "YjUxZWY0MTAyNDVhNGM4YzljMGQ1MTJkYjFlYjNlMjA6MTY5MDM2NTQxMA==",
+            "links": {
+                "self": "https://www.virustotal.com/api/v3/analyses/YjUxZWY0MTAyNDVhNGM4YzljMGQ1MTJkYjFlYjNlMjA6MTY5MDM2NTQxMA=="
+            }
+        }
+    },
+    "help_funcs_3.c": {
+        "data": {
+            "type": "analysis",
+            "id": "ZDc5MDFkZjZmMjEyOGY5N2VjZTk0ZTIzYTcyMmY3OTU6MTY5MDM2NTQxMg==",
+            "links": {
+                "self": "https://www.virustotal.com/api/v3/analyses/ZDc5MDFkZjZmMjEyOGY5N2VjZTk0ZTIzYTcyMmY3OTU6MTY5MDM2NTQxMg=="
+            }
+        }
+    },
+    "inttostr.c": {
+        "data": {
+            "type": "analysis",
+            "id": "MDhkZDUyNGUwM2Y0MThkY2FlZjgwMTQ5ZmI4MDIzYTQ6MTY5MDM2NTQxMw==",
+            "links": {
+                "self": "https://www.virustotal.com/api/v3/analyses/MDhkZDUyNGUwM2Y0MThkY2FlZjgwMTQ5ZmI4MDIzYTQ6MTY5MDM2NTQxMw=="
+            }
+        }
+    },
+    "man_3_printf.txt": {
+        "data": {
+            "type": "analysis",
+            "id": "ZWU3ZDU3NzlkNDkxYmQ2MWJjNzBjOWU2NTlmMGY1ODc6MTY5MDM2NTQxNQ==",
+            "links": {
+                "self": "https://www.virustotal.com/api/v3/analyses/ZWU3ZDU3NzlkNDkxYmQ2MWJjNzBjOWU2NTlmMGY1ODc6MTY5MDM2NTQxNQ=="
+            }
+        }
+    },
+    "printf.c": {
+        "data": {
+            "type": "analysis",
+            "id": "OGM4YjZjYmJhMWQ4ZmNhZDkwNjk0MzE4MTBiMzg0ZDM6MTY5MDM2NTQxNw==",
+            "links": {
+                "self": "https://www.virustotal.com/api/v3/analyses/OGM4YjZjYmJhMWQ4ZmNhZDkwNjk0MzE4MTBiMzg0ZDM6MTY5MDM2NTQxNw=="
+            }
+        }
+    }
+}

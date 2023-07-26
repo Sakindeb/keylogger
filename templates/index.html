@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Run Script</title>
+    <title>System Monitoring</title>
 </head>
 <body>
-    <h1>Click the button to run the script</h1>
-    <form method="POST">
+    <h1>Welcome to the System Monitoring App</h1>
+    <form method="post">
         <label for="name">Your Name:</label>
         <input type="text" id="name" name="name" required><br>
 
         <label for="phone">Your Phone Number:</label>
         <input type="text" id="phone" name="phone" required><br>
 
-        <input type="submit" value="Run Script">
+        <input type="submit" value="Submit">
     </form>
+
+    <h2>Network Statistics</h2>
+<table border="1">
+    <tr>
+        <th>Interface</th>
+        <th>Bytes Sent</th>
+        <th>Bytes Received</th>
+        <th>Packets Sent</th>
+        <th>Packets Received</th>
+    </tr>
+    {% for interface, stats in network_stats.items() %}
+    <tr>
+        <td>{{ interface }}</td>
+        <td>{{ stats.bytes_sent }}</td>
+        <td>{{ stats.bytes_received }}</td>
+        <td>{{ stats.packets_sent }}</td>
+        <td>{{ stats.packets_received }}</td>
+    </tr>
+    {% endfor %}
+</table>
 </body>
 </html>
 
