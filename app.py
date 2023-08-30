@@ -8,11 +8,12 @@ import json
 
 app = Flask(__name__)
 
-# Replace with your Africa's Talking API credentials
+#Africa's Talking API credentials
 AFRICASTALKING_USERNAME = 'spaceity'
 AFRICASTALKING_API_KEY = 'b07e0b95e54d9747c23eb69011ee85c7c842ac57254e5bc4590bfe683fecff32'
 
 # Initialize Africa's Talking SMS
+# This one also has the sms function
 def initialize_sms():
     try:
         africastalking.initialize(username=AFRICASTALKING_USERNAME, api_key=AFRICASTALKING_API_KEY)
@@ -54,20 +55,6 @@ def get_ipinfo_details(ip_address):
     url = f'https://ipinfo.io/{ip_address}?token={IPINFO_API_KEY}'
     response = requests.get(url)
     return response.json()
-
-# Password Saving Functions
-PASSWORD_FILE = "info.txt"
-MASTER_PASSWORD = "your_master_password"  # Replace with your desired master password
-
-
-def encrypt_password(password):
-    # In a real-world application, use proper encryption techniques.
-    return password
-
-
-def decrypt_password(encrypted_password):
-    # In a real-world application, use proper decryption techniques.
-    return encrypted_password
 
 
 def check_master_password(password):
